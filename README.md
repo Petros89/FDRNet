@@ -1,4 +1,4 @@
-# Motor Tic Detector 
+# Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning - FDRNet
 
 ## Description
 - Pytorh GPU implementation of the Project `Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning`
