@@ -37,7 +37,7 @@ The pipeline is demonstrated below.
 
 | Left Foot Vertical Acceleration [LAV]
 | --- |
-| ![](./figs/pred.png)
+| ![](./results/pred.png)
 
 
 ## Contact
