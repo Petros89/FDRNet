@@ -1,7 +1,7 @@
-# Gait Feedback and Correction Generation Using Multivariate Signal Learning
+# Gait Feedback and Correction Generation Using Multivariate Sequence Learning
 
 ## Description
-- Pytorh GPU implementation of the Project `Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning`
+- Pytorh GPU implementation of the FDRNet - a new deep learning architecture for multivariate long sequence generation`
 - Basic Neural Network Architecture for Long-Sequence Multivariate Time-Series Learning   
 
 ## Abstract
@@ -70,7 +70,7 @@ The pipeline is demonstrated below.
 | ![](./results/pred.png)
 
 ## Citation
-`Petros Apostolou and Vassilios Morellas, Gait Feedback and Correction Generation Using Multivariate Signal Learning, Computer Science and Engineering Department,
+`Petros Apostolou and Vassilios Morellas, Gait Feedback and Correction Generation Using Multivariate Sequence Learning, Computer Science and Engineering Department,
 University of Minnesota, 2022.`
 
 ## Contact
