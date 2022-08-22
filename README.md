@@ -2,7 +2,7 @@
 
 ## Description
 - Pytorh GPU implementation of the Project `Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning`
-- Novel Neural Network Architecture Based on new Feedback Loss Function embedded
+- Basic Neural Network Architecture for Long-Sequence Multivariate Time-Series Learning   
 
 ## Abstract
 Gait analysis is the systematic study of human lo-
