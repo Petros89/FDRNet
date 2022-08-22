@@ -29,11 +29,11 @@ new technology in the area of physical ability performance assessments.
 
 ## Documentation
 - Code is the documentation of itself
-- Project report can be found at `Project.pdf` file
+
 
 ## Usage
 - Use `python3 main.py` to train your feedback discovery network.
-- A summary of the pipeline is given in `report.pdf`.
+- A full report of the pipeline is given in `Project-Report.pdf`.
 
 ## Demonstration
 The pipeline is demonstrated below.
