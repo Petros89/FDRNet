@@ -40,15 +40,10 @@ The pipeline is demonstrated below.
 
 #- Training Curves.
 #
-#| Losses | Accuracies |
-#| --- | --- |
-#| ![](./figs/real_loss.PNG) | ![](./figs/real_accuracy.PNG) |
-#
-#- Classification Confusion Matrix.
-#
-#| Absolute Values | Percentages |
-#| --- | --- |
-#| ![](./figs/val_conf_mat.png) | ![](./figs/val_conf_mat_percent.png) |
+#| Loss Curve
+#| --- |
+#| ![](./figs/Loss_curve.PNG)
+
 
 
 - Feedback Discovery on a sample of 16-channel time series per 1042 time-step signal.
