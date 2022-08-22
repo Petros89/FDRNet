@@ -1,4 +1,4 @@
-# Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning - FDRNet
+# Gait Feedback and Correction Generation Using Multivariate Signal Learning
 
 ## Description
 - Pytorh GPU implementation of the Project `Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning`
