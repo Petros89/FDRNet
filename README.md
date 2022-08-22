@@ -5,34 +5,22 @@
 - Basic Neural Network Architecture for Long-Sequence Multivariate Time-Series Learning   
 
 ## Abstract
-Gait analysis is the systematic study of human lo-
-comotion using external visual and sensory observa-
-tions. Data extraction from such observations en-
-ables the quantitative assessment of human motion
+Gait analysis is the systematic study of human locomotion using external visual and sensory observations. Data extraction from such observations enables the quantitative assessment of human motion
 skills that can lead to feedback discovery and physical
-ability evaluation. Current research methods in hu-
-man gait analysis cover a substantial portion on gait-
+ability evaluation. Current research methods in human gait analysis cover a substantial portion on gait-
 phase identification, locomotion recognition and gait
-trajectory prediction. Although recognizing and pre-
-dicting human phase-gait cycles is important for un-
+trajectory prediction. Although recognizing and predicting human phase-gait cycles is important for un-
 derstanding and analyzing physical motor ability, it
 is insufficient to provide objective gait rate feedback
-and motor function recovery. In this work we intro-
-duce and implement the Feedback Recovery Network
-(FDRNet). FDRNet is a novel deep neural network ar-
-chitecture able to provide objective personalized quan-
-titative gait feedback discovery and correction on mul-
-tivariate time-series data. We train FDRNet using an
+and motor function recovery. In this work we introduce and implement the Feedback Recovery Network
+(FDRNet). FDRNet is a novel deep neural network architecture able to provide objective personalized quan-
+titative gait feedback discovery and correction on multivariate time-series data. We train FDRNet using an
 online available dataset containing 1020 multivariate
-gait signals from 230 subjects undergoing a fixed pro-
-tocol: standing still, walking 10 m, turning around,
-walking back and stopping. The measured popula-
-tion is composed of healthy subjects as well as pa-
-tients with neurological or orthopedic disorders. The
+gait signals from 230 subjects undergoing a fixed protocol: standing still, walking 10 m, turning around,
+walking back and stopping. The measured population is composed of healthy subjects as well as patients with neurological or orthopedic disorders. The
 FDRNet holds promise for automation in personalized
 rehabilitation and considers the potential of creating
-new technology in the area of physical ability perfor-
-mance assessments.
+new technology in the area of physical ability performance assessments.
 
 ## Code
 - All source code is in `source`.
