@@ -12,15 +12,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  
- Author: Petros Apostolou - apost035@umn.edu
- Created: 6/23/2022 - 12:59 EST (Washington DC)
- Cite: Petros Apostolou, "Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning",
-       PhD in Computer Science and Engineering Department, University of Minnesota, 2022.
-"""
-"""
-Created on Sun Oct 25 11:17:43 2020
-Modified on Monday June 20 10:32:23 2022
-@author: Petros Apostolou | trs.apostolou@gmail.com
+ @Author: Petros Apostolou - apost035@umn.edu
+ @Created: 6/23/2022 - 12:59 PM
+ Modified: 08/12/2022 - 3:36 PM
 """
 
 
@@ -70,25 +64,14 @@ from utils import generate_batches
 from utils import count_parameters
 from utils import calculate_accuracy
 from utils import epoch_time
-from model1 import FDRNet
-from train1 import train_network
+from model import FDRNet
+from train import train_network
 from loss import FDLoss
 
 
 
 if __name__ == "__main__":
     
-    # parsing input arguments
-    #parser = argparse.ArgumentParser(description='PyTorch MLP Gait Analysis')
-    #parser.add_argument('--seed', type=int, default=543,
-    #                    help='random seed (default: 543)')
-    #parser.add_argument('--learning-rate', type=float, default=0.01, metavar='lr'
-    #                    help='learning rate (default: 0.01)')
-    #parser.add_argument('--epochs', type=int, default=50, metavar='epochs'
-    #                    help='number of training epochs (default: 50)')
-    #args = parser.parse_args()
-
-    # get healthy and impaired samples
     all_codes = get_code_list()
     healthy_code, impaired_code = get_code_control(all_codes)
     print("There are {} total trials.".format(len(all_codes)))
@@ -139,7 +122,8 @@ if __name__ == "__main__":
 
     print("Created {} number of healthy left foot batches.".format(len(Hleft_batches)))
     print("Created {} number of impaired left foot batches.".format(len(Ileft_batches)))
-
+    print("healthy mini batch size: ", Hleft_batches.shape)
+    print("impaured mini batch size: ", Ileft_batches.shape)
 
 
     # set reproducible parameters
@@ -150,6 +134,7 @@ if __name__ == "__main__":
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
 
+    ''' Skip the following 6 lines and continue in line number 154'''
     # set train and validation sample ratio
     #VALID_RATIO = 0.9
     #train_size = int(len(Hleft_batches) * VALID_RATIO)
@@ -172,30 +157,16 @@ if __name__ == "__main__":
     print("Impaired Tensor Size ", len(ILtrain)) 
 
 
- 
-    # use MSE Loss
-    #criterion = nn.MSELoss()
-    #criterion = nn.HingeEmbeddingLoss()
-    #criterion = nn.KLDivLoss()
+    # Define Loss Function (call function in loss.py) 
     criterion = FDLoss()
 
-    # let's free/clean GPU cache
+    # let's free/clean GPU memory cache
     torch.cuda.empty_cache()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     model = FDRNet(input_dim, output_dim)
-    # multiGPU model training
-    #if torch.cuda.device_count() > 1:
-    #    print("Let's use", torch.cuda.device_count(), "GPUs!")
-    #    model = nn.DataParallel(model)
-    
-    #else: # single GPU model training
-    #    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    #    model = FDRNet(input_dim, output_dim)
-    #    # load model to device
-    #    model = model.to(device)
-    #    criterion = criterion.to(device)
 
+    # allocate model and criterion to GPU device
     model.to(device)
     criterion.to(device)
     print(model)
@@ -204,11 +175,8 @@ if __name__ == "__main__":
     print("==========================================================")
   
     
-
-    # use Adam optimizer
-    optimizer = optim.SGD(model.parameters(), lr=0.01)
-    #optimizer = optim.SGD(model.parameters(), lr=0.01)#, momentum=0.9)
-
+    # choose optimizer for the training loop
+    optimizer = optim.SGD(model.parameters(), lr=2e-5, momentum=0.9)
 
     # Initialize best losses to save
     best_train_loss = float('inf')
@@ -226,90 +194,32 @@ if __name__ == "__main__":
     
         # start time stamp
         start_time = time.monotonic()
-    
+
         # compute Loss model
-        train_loss, train_acc = train_network(model, ILtrain, HLtrain, optimizer, criterion, device)
+        train_loss = train_network(model, ILtrain, HLtrain, optimizer, criterion, device)
 
         if train_loss < best_train_loss:
             best_train_loss = train_loss
             torch.save(model.state_dict(), '../weights/train-FDRNet.pt')
 
-        # This is for validation set
-        #valid_loss, valid_acc = evaluate(model, Ivalid_samples, Hvalid_samples, criterion, device)
-    
-        #if valid_loss < best_valid_loss:
-        #    best_valid_loss = valid_loss
-        #    torch.save(model.state_dict(), 'tut1-model.pt')
-
+        # here can perform validation at a later stage
+ 
         # append trainin curves
         train_losses.append(train_loss)
-        train_accues.append(train_acc)
-    
+
         # end time stamp
         end_time = time.monotonic()
     
         # elapsed time per epoch
         epoch_mins, epoch_secs = epoch_time(start_time, end_time)
     
-        print(f'Epoch: {epoch} | Epoch Time: {epoch_mins}m {epoch_secs}s')
-        print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
-        #print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}%')
+        print(f'Epoch: {epoch} | Train Loss: {train_loss:.8f}  |  Epoch Time: {epoch_mins}m {epoch_secs}s')
 
 
     plt.plot(train_losses, label="train_loss", color="blue")
-    plt.plot(train_accues, label="train_acc", color="red")
     plt.legend()
     plt.show()
-    exit()
 
-    # load best weight to evaluate test data
-    #model.load_state_dict(torch.load('../weights/train-FDRNet.pt'))
-    #test_loss, test_acc = evaluate(model, test_iterator, criterion, device)
-
-
-    # def get_predictions(model, iterator, device):
-
-    # 	model.eval()
-
-    # 	images = []
-    # 	labels = []
-    # 	probs = []
-
-    # 	with torch.no_grad():
-
-    # 	    for (x, y) in iterator:
-
-    # 	        x = x.to(device)
-
-    # 	        y_pred, _ = model(x)
-
-    # 	        y_prob = F.softmax(y_pred, dim=-1)
-
-    # 	        images.append(x.cpu())
-    # 	        labels.append(y.cpu())
-    # 	        probs.append(y_prob.cpu())
-
-    # 	images = torch.cat(images, dim=0)
-    # 	labels = torch.cat(labels, dim=0)
-    # 	probs = torch.cat(probs, dim=0)
-
-    # 	return images, labels, probs
- 
-    #images, labels, probs = get_predictions(model, test_iterator, device)
-    #pred_labels = torch.argmax(probs, 1)
-
-    # def plot_confusion_matrix(labels, pred_labels):
-
-    #     fig = plt.figure(figsize=(10, 10))
-    #     ax = fig.add_subplot(1, 1, 1)
-    #     cm = metrics.confusion_matrix(labels, pred_labels)
-    #     cm = metrics.ConfusionMatrixDisplay(cm, display_labels=range(10))
-    #     cm.plot(values_format='d', cmap='Blues', ax=ax)
-
-    #plot_confusion_matrix(labels, pred_labels)
-
-    #plt.plot(left_signal[:1042,0], label="left", color='blue')
-    #plt.plot(abnormal, label="right", color='red')
-    #plt.legend()
-    #plt.show()
-    #exit()
+###########
+### EOF ###
+###########

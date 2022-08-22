@@ -12,15 +12,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  
- Author: Petros Apostolou - apost035@umn.edu
- Created: 6/23/2022 - 12:59 EST (Washington DC)
- Cite: Petros Apostolou, "Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning",
-       PhD in Computer Science and Engineering Department, University of Minnesota, 2022.
-"""
-"""
-Created on Sun Oct 25 11:17:43 2020
-Modified on Monday June 20 10:32:23 2022
-@author: Petros Apostolou | trs.apostolou@gmail.com
+ @Author: Petros Apostolou - apost035@umn.edu
+ @Created: 6/23/2022 - 12:59 PM
+ Modified: 08/12/2022 - 3:36 PM
 """
 
 
@@ -39,6 +33,7 @@ from torch.autograd import Variable
 import copy
 import random
 import time
+from utils import epoch_time
 
 
 def train_network(model, source, target, optimizer, criterion, device):
@@ -51,16 +46,10 @@ def train_network(model, source, target, optimizer, criterion, device):
     model.train()
 
 
-    #for (x, y) in tqdm(zip(source, target), desc="Training", leave=False):
-    #for (x, y) in tqdm(zip(source, target), total = 50, desc="Training", leave=False):
     for (x, y) in zip(source, target):
         # send x,y to cuda device
         x = x.to(device)
         y = y.to(device)
-
-
-        # need to add extra variable for real diff = compute_feedback(x,y) and
-        # then compute loss as MSE(pred, diff.view(-1)
 
         # initialize gradients
         optimizer.zero_grad()
@@ -68,13 +57,9 @@ def train_network(model, source, target, optimizer, criterion, device):
         # get feedback prediction 
         pred, _ = model(x)
 
-
         # calculate MSE loss between prediction and target
         loss = criterion(pred, y.view(-1))
-
-        # calculate_accuracy as loss inverse
-        acc = abs(1 - loss) 
-
+       
         # back-propagete the loss
         loss.backward()
 
@@ -83,6 +68,5 @@ def train_network(model, source, target, optimizer, criterion, device):
 
         # increment losses per iteration
         epoch_loss += loss.item()
-        epoch_acc += acc.item()
       
-    return epoch_loss / len(source), epoch_acc / len(source)
+    return epoch_loss / len(source)

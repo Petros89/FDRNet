@@ -12,16 +12,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  
- Author: Petros Apostolou - apost035@umn.edu
- Created: 6/23/2022 - 12:59 EST (Washington DC)
- Cite: Petros Apostolou, "Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning",
-       PhD in Computer Science and Engineering Department, University of Minnesota, 2022.
-"""
-"""
-Created on Sun Oct 25 11:17:43 2020
-Reference Link: https://github.com/kianData/PyTorch-Multivariate-LSTM/blob/main/torch_GitHub.py
-Modified on Monday June 20 10:32:23 2022
-@author: Petros Apostolou | trs.apostolou@gmail.com
+ @Author: Petros Apostolou - apost035@umn.edu
+ @Created: 6/23/2022 - 12:59 PM
+ Modified: 08/12/2022 - 3:36 PM
 """
 
 import numpy as np

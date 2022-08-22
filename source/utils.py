@@ -12,10 +12,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  
- Author: Petros Apostolou - apost035@umn.edu
- Created: 6/23/2022 - 12:59 EST (Washington DC)
- Cite: Petros Apostolou, "Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning",
-       PhD in Computer Science and Engineering Department, University of Minnesota, 2022.
+ @Author: Petros Apostolou - apost035@umn.edu
+ @Created: 6/23/2022 - 12:59 PM
+ Modified: 08/12/2022 - 3:36 PM
 """
 
 import sys
@@ -32,8 +31,6 @@ from sklearn.utils import resample
 from statsmodels.tsa.stattools import kpss
 from statsmodels.tsa.arima.model import ARIMA
 import matplotlib.pyplot as plt
-
-#plt.rcParams['text.usetex'] = True
 
 
 DATA_HOME = "../GaitData"
@@ -154,14 +151,15 @@ def arima_test(data):
     return model_arima.fit()
     
 
-
 def butter_lowpass(cutoff, fs, order=5):
     return butter(order, cutoff, fs=fs, btype='low', analog=False)
+
 
 def butter_lowpass_filter(data, cutoff, fs, order=5):
     a, b = butter_lowpass(cutoff, fs, order=order)
     res = lfilter(a, b, data)
     return res
+
 
 def smooth_data(data, cutoff, fs, order):
     """Returns the data smoothed by a low-pass filter.
@@ -330,34 +328,6 @@ def get_both_signal(control_code):
     return both 
 
 
-# split a multivariate sequence into samples
-def split_sequences(sequences, n_steps_in, n_steps_out):
-    """Returns np.array if sliced window samples.
-
-    Returns
-    -------
-    Array
-        Array of sliced window samples.
-    """
-    X = []
-    #y = []
-    for i in range(len(sequences) - 1):
-        # find the end of this pattern
-        end_ix = i + n_steps_in
-        out_end_ix = end_ix + n_steps_out -1
-        # check if we are beyond the dataset
-        if out_end_ix > len(sequences) - 1:
-            break
-        # gather input and output parts of the pattern
-        #seq_x, seq_y = sequences[i:end_ix, :out_end_ix], sequences[end_ix:out_end_ix+1, -1]
-        seq_x = sequences[i:end_ix, :out_end_ix]
-        X.append(seq_x)
-        #y.append(seq_y)
-    #return array(X), array(y)
-    return array(X)
-
-
-# batch generator
 def generate_batches(dataset, batch_size, shuffle=True):
     """Returns dataset splitted into fixed size mini_batches.
     
@@ -385,11 +355,11 @@ def generate_batches(dataset, batch_size, shuffle=True):
         mini_batches.append(dataset[batch_idx])
     return np.array(mini_batches)
 
+
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
-# compute network accuracy
 def calculate_accuracy(y_pred, y):
     top_pred = y_pred.argmax(1, keepdim=True)
     correct = top_pred.eq(y.view_as(top_pred.reshape(-1))).sum()
@@ -397,7 +367,6 @@ def calculate_accuracy(y_pred, y):
     return acc
 
 
-# track epoch duration
 def epoch_time(start_time, end_time):
     elapsed_time = end_time - start_time
     elapsed_mins = int(elapsed_time / 60)
@@ -406,7 +375,6 @@ def epoch_time(start_time, end_time):
 
 
 
-# test if stationary
 def adf_test(timeseries):
     print ('Results of Dickey-Fuller Test:')
     p_val_lim = 0.05
@@ -424,7 +392,6 @@ def adf_test(timeseries):
     return dfoutput 
 
 
-# find period of seasonality
 def get_signal_period(signal):
     acf = np.correlate(signal, signal, 'full')[-len(signal):]
     inflection = np.diff(np.sign(np.diff(acf)))

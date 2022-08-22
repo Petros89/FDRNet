@@ -13,15 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  
- Author: Petros Apostolou - apost035@umn.edu
- Created: 6/23/2022 - 12:59 EST (Washington DC)
- Cite: Petros Apostolou, "Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning",
-       PhD in Computer Science and Engineering Department, University of Minnesota, 2022.
-"""
-"""
-Created on Sun Oct 25 11:17:43 2020
-Modified on Monday June 20 10:32:23 2022
-@author: Petros Apostolou | trs.apostolou@gmail.com
+ @Author: Petros Apostolou - apost035@umn.edu
+ @Created: 6/23/2022 - 12:59 PM
+ Modified: 08/12/2022 - 3:36 PM
 """
 
 
@@ -60,21 +54,18 @@ class FDLoss(nn.Module):
                 fdback[i] = dat1[i] + abs(dat2[i])
             else:
                 fdback[i] = -(abs(dat1[i]) + dat2[i])
-        #return fdback + dat2.cuda()
-        return fdback + dat2.cuda()
+        return fdback
+
 
     def forward(self, source, target):        
         
-        #inputs = F.sigmoid(inputs)       
-        
+        # flatten matrices (1042x16) 
         source = source.view(-1)
         target = target.view(-1)
         
-        
+        # feedback score 
         fdr_score = self.compute_feedback(target, source)
-        #loss_score = torch.mean(fdr_score)
-        loss_score = torch.mean((fdr_score - target)**2)
-        #intersection = (inputs * targets).sum()                            
-        #dice = (2.*intersection + smooth)/(inputs.sum() + targets.sum() + smooth)  
-        
+
+        loss_score = torch.nn.functional.mse_loss(fdr_score, target)
+
         return loss_score 

@@ -1,3 +1,23 @@
+""" Copyright (c) 2022, Petros Apostolou.  All rights reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+ @Author: Petros Apostolou - apost035@umn.edu
+ @Created: 6/23/2022 - 12:59 PM
+ Modified: 08/12/2022 - 3:36 PM
+"""
+
+
 import numpy as np
 from numpy import array
 import pandas as pd
@@ -43,8 +63,8 @@ from utils import generate_batches
 from utils import count_parameters
 from utils import calculate_accuracy
 from utils import epoch_time
-from model1 import FDRNet
-from train1 import train_network
+from model import FDRNet
+from train import train_network
 
 
 
@@ -89,20 +109,19 @@ prediction = prediction.cpu().detach().numpy()
 normal = normal.cpu().detach().numpy()
 abnormal = abnormal.cpu().detach().numpy()
 
-
-mse1 = mean_squared_error(abnormal, normal)
-mse2 = mean_squared_error(prediction, normal)
-print(mse1, mse2)
-
 # smooth data
 normal = smooth_data(normal[:,0], 0.5, 30, 6)
 abnormal = smooth_data(abnormal[:,0], 0.5, 30, 6)
 prediction = smooth_data(prediction[:,0], 0.5, 30, 6)
 
+mse1 = mean_squared_error(abnormal, normal)
+mse2 = mean_squared_error(prediction, normal)
+print(mse1, mse2)
+
 # plot signals
+plt.title("Feedback Generation [RRZ]")
 plt.plot(abnormal, label="impaired", color="red")
 plt.plot(normal, label="healthy", color="blue")
 plt.plot(prediction, label="feedback", color="green")
-plt.legend()
-#plt.savefig("../results/pred01.png")
+plt.legend(loc='upper right')
 plt.show()

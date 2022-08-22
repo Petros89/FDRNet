@@ -12,15 +12,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  
- Author: Petros Apostolou - apost035@umn.edu
- Created: 6/23/2022 - 12:59 EST (Washington DC)
- Cite: Petros Apostolou, "Gait Feedback Discovery and Correction Using Multivariate Time-Series Learning",
-       PhD in Computer Science and Engineering Department, University of Minnesota, 2022.
-"""
-"""
-Created on Sun Oct 25 11:17:43 2020
-Modified on Monday June 20 10:32:23 2022
-@author: Petros Apostolou | trs.apostolou@gmail.com
+ @Author: Petros Apostolou - apost035@umn.edu
+ @Created: 6/23/2022 - 12:59 PM
+ Modified: 08/12/2022 - 3:36 PM
 """
 
 
@@ -47,19 +41,14 @@ class FDRNet(nn.Module):
 
     def forward(self, source):
 
-        # get batch size
         batch_size = source.shape[0]
 
-        #x = x.view(batch_size, -1)
         source = source.view(-1)
 
         w = F.relu(self.input_fc(source))
 
-        # w = [batch size, 250]
         h = F.relu(self.hidden_fc(w))
 
-        # h = [batch size, 100]
         pred_y = self.output_fc(h)
 
-        # y_pred = [batch size, output dim]
         return pred_y, h
