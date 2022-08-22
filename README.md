@@ -42,7 +42,7 @@ The pipeline is demonstrated below.
 #
 #| Loss Curve
 #| --- |
-#| ![](./figs/Loss_curve.PNG)
+#| ![](./results/Loss_curve.PNG)
 
 
 
