@@ -40,7 +40,8 @@ mance assessments.
 - Get model predictions using the `predict.py` file.
 
 ## Documentation
-- Code is the documentation of itself.
+- Code is the documentation of itself
+- Project report can be found at `Project.pdf` file
 
 ## Usage
 - Use `python3 main.py` to train your feedback discovery network.
