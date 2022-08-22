@@ -70,7 +70,7 @@ The pipeline is demonstrated below.
 | ![](./results/pred.png)
 
 ## Cite
-Petros Apostolou and Vassilios Morellas, Gait Feedback and Correction Generation Using Multivariate Signal Learning, Computer Science and Engineering Department,
+Petros Apostolou and Vassilios Morellas, \textit{Gait Feedback and Correction Generation Using Multivariate Signal Learning}, Computer Science and Engineering Department,
 University of Minnesota, 2022.
 
 ## Contact
