@@ -2,7 +2,7 @@
 
 ## Description
 - Pytorh GPU implementation of the FDRNet - a new deep learning autoencoder architecture for multivariate long sequence generation
-- Basic Neural Network Architecture for Long-Sequence Multivariate Time-Series Learning   
+- Basic Autoencoder Architecture for Long-Sequence Multivariate Time-Series Learning   
 
 ## Abstract
 Gait analysis is the systematic study of human locomotion using external visual and sensory observations. Data extraction from such observations enables the quantitative assessment of human motion
