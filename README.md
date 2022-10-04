@@ -1,7 +1,7 @@
 # Gait Feedback and Correction Generation Using Multivariate Sequence Learning
 
 ## Description
-- Pytorh GPU implementation of the FDRNet - a new deep learning architecture for multivariate long sequence generation`
+- Pytorh GPU implementation of the FDRNet - a new deep learning autoencoder architecture for multivariate long sequence generation
 - Basic Neural Network Architecture for Long-Sequence Multivariate Time-Series Learning   
 
 ## Abstract
